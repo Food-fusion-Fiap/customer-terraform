@@ -5,7 +5,7 @@ variable "region" {
 
 variable "db_password" {
   description = "Password for the database"
-  type        = string
+  default     = ""
 }
 
 variable "db_instance_class" {
@@ -15,12 +15,12 @@ variable "db_instance_class" {
 
 variable "db_name" {
   description = "The name of the database"
-  type        = string
+  default     = ""
 }
 
 variable "db_username" {
   description = "The username for the database"
-  type        = string
+  default     = ""
 }
 
 variable "project_name" {
@@ -50,5 +50,5 @@ variable "subnetC" {
 
 variable "github_token" {
   description = "The GitHub token for authentication"
-  type        = string # github_pat_...
+  default     = ""
 }
