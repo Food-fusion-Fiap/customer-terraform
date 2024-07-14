@@ -5,7 +5,7 @@ variable "region" {
 
 variable "db_password" {
   description = "Password for the database"
-  default     = "postgres"
+  type        = string
 }
 
 variable "db_instance_class" {
@@ -15,12 +15,12 @@ variable "db_instance_class" {
 
 variable "db_name" {
   description = "The name of the database"
-  default     = "postgres"
+  type        = string
 }
 
 variable "db_username" {
   description = "The username for the database"
-  default     = "postgres"
+  type        = string
 }
 
 variable "project_name" {
@@ -50,6 +50,5 @@ variable "subnetC" {
 
 variable "github_token" {
   description = "The GitHub token for authentication"
-  type        = string
-  default     = "github_pat_"
+  type        = string # github_pat_...
 }
