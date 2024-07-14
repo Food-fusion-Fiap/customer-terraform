@@ -1,4 +1,4 @@
-name: 'Destroying Terraform'
+name: 'Destroying Infrastructure'
 
 on:
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
         fi
 
   terraform_destroy_eks:
-    name: 'Terraform Destroy EKS'
+    name: 'Destroy EKS'
     runs-on: ubuntu-latest
     needs: cleanup_ecr
 
@@ -60,7 +60,7 @@ jobs:
       run: terraform destroy -auto-approve
 
   terraform_destroy_rds:
-    name: 'Terraform Destroy RDS'
+    name: 'Destroy RDS'
     runs-on: ubuntu-latest
     needs: terraform_destroy_eks
 

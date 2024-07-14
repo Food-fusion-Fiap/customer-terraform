@@ -1,4 +1,4 @@
-name: 'Creating Terraform'
+name: 'Creating Infrastructure'
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ env:
 
 jobs:
   terraform_apply_rds:
-    name: 'Terraform Applying RDS'
+    name: 'Create RDS'
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
 
@@ -41,7 +41,7 @@ jobs:
         TF_VAR_github_token: ${{ secrets.TOKEN_GITHUB }}
 
   terraform_apply_eks:
-    name: 'Terraform Applying EKS'
+    name: 'Create EKS'
     runs-on: ubuntu-latest
     needs: terraform_apply_rds
 
