@@ -6,7 +6,8 @@ data "aws_instance" "ec2" {
     values = ["NG-${var.projectName}"]
   }
 
-  depends_on = [aws_eks_node_group.node-group]
+  instance_state = "running"
+  depends_on     = [aws_eks_node_group.node-group]
 }
 
 data "terraform_remote_state" "rds_state" {
