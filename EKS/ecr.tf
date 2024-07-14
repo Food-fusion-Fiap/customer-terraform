@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "ecr_repo" {
-  name = "customer-service"
+  name = var.projectName
 
   image_tag_mutability = "MUTABLE"
 
