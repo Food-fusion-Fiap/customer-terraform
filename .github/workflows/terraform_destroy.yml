@@ -62,7 +62,7 @@ jobs:
   terraform_destroy_rds:
     name: 'Terraform Destroy RDS'
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'destroy'
+    needs: terraform_destroy_eks
 
     steps:
     - name: Checkout
