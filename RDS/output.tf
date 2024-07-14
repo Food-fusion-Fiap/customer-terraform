@@ -5,5 +5,5 @@ output "rds_public_sg_id" {
 
 output "db_instance_endpoint" {
   description = "The connection endpoint"
-  value       = aws_db_instance.default.endpoint
+  value       = replace(aws_db_instance.default.endpoint, ":5432", "")
 }
