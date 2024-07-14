@@ -80,3 +80,5 @@ jobs:
     - name: Terraform Destroy RDS
       working-directory: ./RDS
       run: terraform destroy -auto-approve
+      env:
+        TF_VAR_github_token: ${{ secrets.TOKEN_GITHUB }}
