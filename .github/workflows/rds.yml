@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Type "yes" to confirm destroy action'
+        description: 'Type "create" to create the RDS instance or "destroy" to destroy it'
         required: true
         
 env:
@@ -16,7 +16,7 @@ jobs:
   terraform_apply_rds:
     name: 'Terraform Apply RDS'
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'create'
 
     steps:
     - name: Checkout
@@ -43,7 +43,7 @@ jobs:
   terraform_destroy_rds:
     name: 'Terraform Destroy RDS'
     runs-on: ubuntu-latest
-    if: github.event.inputs.confirm == 'yes'
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'destroy'
 
     steps:
     - name: Checkout
