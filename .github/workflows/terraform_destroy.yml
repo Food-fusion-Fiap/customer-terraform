@@ -1,10 +1,6 @@
 name: 'Terraform EKS'
 
 on:
-  workflow_run:
-    workflows: ["Terraform RDS"]
-    types:
-      - completed
   workflow_dispatch:
     inputs:
       confirm:
@@ -17,32 +13,10 @@ env:
   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
 jobs:
-  terraform_apply_eks:
-    name: 'Terraform Apply EKS'
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_run'
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.8.2
-
-    - name: Terraform Init EKS
-      working-directory: ./EKS
-      run: terraform init
-
-    - name: Terraform Apply EKS
-      working-directory: ./EKS
-      run: terraform apply -auto-approve
-      
   cleanup_ecr:
     name: 'Cleanup ECR'
     runs-on: ubuntu-latest
-    if: github.event.inputs.confirm == 'destroy'
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'destroy'
 
     steps:
     - name: Configure AWS credentials
@@ -63,7 +37,7 @@ jobs:
           aws ecr batch-delete-image --repository-name $REPOSITORY_NAME --image-ids "$IMAGE_IDS"
         fi
 
-  terraform_destroy:
+  terraform_destroy_eks:
     name: 'Terraform Destroy EKS'
     runs-on: ubuntu-latest
     needs: cleanup_ecr
@@ -83,4 +57,26 @@ jobs:
 
     - name: Terraform Destroy EKS
       working-directory: ./EKS
+      run: terraform destroy -auto-approve
+
+  terraform_destroy_rds:
+    name: 'Terraform Destroy RDS'
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'destroy'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.8.2
+
+    - name: Terraform Init RDS
+      working-directory: ./RDS
+      run: terraform init
+
+    - name: Terraform Destroy RDS
+      working-directory: ./RDS
       run: terraform destroy -auto-approve
