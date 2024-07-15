@@ -20,8 +20,7 @@ data "github_repository" "repo" {
 }
 
 resource "github_actions_organization_secret" "db_host_secret" {
-  secret_name             = "POSTGRES_HOST"
-  plaintext_value         = aws_db_instance.default.endpoint
-  visibility              = "selected"
-  selected_repository_ids = [data.github_repository.repo.repo_id]
+  secret_name     = "POSTGRES_HOST_CUSTOMER"
+  plaintext_value = replace(aws_db_instance.default.endpoint, ":5432", "")
+  visibility      = "all"
 }
