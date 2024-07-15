@@ -15,10 +15,6 @@ provider "github" {
   owner = "Food-fusion-Fiap" # Nome da organização
 }
 
-data "github_repository" "repo" {
-  full_name = "Food-fusion-Fiap/customer-service"
-}
-
 resource "github_actions_organization_secret" "db_host_secret" {
   secret_name     = "POSTGRES_HOST_CUSTOMER"
   plaintext_value = replace(aws_db_instance.default.endpoint, ":5432", "")
